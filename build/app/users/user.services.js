@@ -15,24 +15,45 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createUser = exports.getUserById = exports.getUserBySessionToken = exports.getUserByEmail = void 0;
 // app/users/user.services.ts
 const user_repo_1 = __importDefault(require("./user.repo"));
+const user_responses_1 = require("./user.responses");
 // Fetch a user by email
 const getUserByEmail = (email) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield user_repo_1.default.getUserByEmail(email);
+    try {
+        return yield user_repo_1.default.getUserByEmail(email);
+    }
+    catch (error) {
+        throw user_responses_1.userResponses.NOT_FOUND;
+    }
 });
 exports.getUserByEmail = getUserByEmail;
 // Fetch a user by session token
 const getUserBySessionToken = (sessionToken) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield user_repo_1.default.getUserBySessionToken(sessionToken);
+    try {
+        return yield user_repo_1.default.getUserBySessionToken(sessionToken);
+    }
+    catch (error) {
+        throw user_responses_1.userResponses.NOT_FOUND;
+    }
 });
 exports.getUserBySessionToken = getUserBySessionToken;
 // Fetch a user by ID
 const getUserById = (id) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield user_repo_1.default.getUserById(id);
+    try {
+        return yield user_repo_1.default.getUserById(id);
+    }
+    catch (error) {
+        throw user_responses_1.userResponses.NOT_FOUND;
+    }
 });
 exports.getUserById = getUserById;
 // Create a new user
 const createUser = (userData) => __awaiter(void 0, void 0, void 0, function* () {
-    return yield user_repo_1.default.createUser(userData);
+    try {
+        return yield user_repo_1.default.createUser(userData);
+    }
+    catch (error) {
+        throw user_responses_1.userResponses.SERVER_ERR;
+    }
 });
 exports.createUser = createUser;
 exports.default = {

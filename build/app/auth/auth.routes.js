@@ -22,7 +22,7 @@ const router = (0, express_1.Router)();
 router.post('/signup', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const newUser = yield auth_services_1.default.signUp(req.body);
-        res.json(new response_handler_1.ResponseHandler(newUser));
+        res.send(new response_handler_1.ResponseHandler(newUser));
     }
     catch (error) {
         next(error);
@@ -32,7 +32,7 @@ router.post('/signup', (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 router.post('/login', (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const user = yield auth_services_1.default.login(req.body);
-        res.json(new response_handler_1.ResponseHandler(user));
+        res.send(new response_handler_1.ResponseHandler(user));
     }
     catch (error) {
         next(error);

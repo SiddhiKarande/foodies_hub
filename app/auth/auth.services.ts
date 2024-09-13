@@ -3,11 +3,12 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import userServices from '../users/user.services';
 import { ZUser, ZLogin, IUser } from '../users/user.types';
-import { authResponses } from './auth.responses'; // Assuming you have predefined responses
+import { authResponses } from './auth.responses';
 
 // Sign up service function
 export const signUp = async (userData: Record<string, any>) => {
-  // Validate incoming data using Zod schema
+  try {
+    // Validate incoming data using Zod schema
   const parsed = ZUser.safeParse(userData);
   if (!parsed.success) {
     throw authResponses.UNAUTHORIZED;
@@ -37,11 +38,15 @@ export const signUp = async (userData: Record<string, any>) => {
   // Insert the user into the database
   const createdUser = await userServices.createUser(newUser);
   return createdUser;
+  } catch (error) {
+    throw error;
+  }
 };
 
 // Login service function
 export const login = async (loginData: Partial<IUser>) => {
-  const parsed = ZLogin.safeParse(loginData);
+  try {
+    const parsed = ZLogin.safeParse(loginData);
   if (!parsed.success) {
     throw authResponses.UNAUTHORIZED;
   }
@@ -57,7 +62,7 @@ export const login = async (loginData: Partial<IUser>) => {
   // Compare provided password with stored hashed password
   const passwordMatch = await bcrypt.compare(password, existingUser.password);
   if (!passwordMatch) {
-    throw authResponses.INVALID_CREDENTIALS;
+    throw authResponses.UNAUTHORIZED;
   }
 
   // Generate JWT token
@@ -76,6 +81,9 @@ export const login = async (loginData: Partial<IUser>) => {
       avatar: existingUser.avatar,
     },
   };
+  } catch (error) {
+    throw error;
+  }
 };
 
 export default {
