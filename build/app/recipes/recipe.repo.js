@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const recipe_schema_1 = require("./recipe.schema");
 const createRecipe = (recipeData) => __awaiter(void 0, void 0, void 0, function* () { return yield recipe_schema_1.recipeModel.create(recipeData); });
 const getAllRecepies = () => __awaiter(void 0, void 0, void 0, function* () { return yield recipe_schema_1.recipeModel.find().populate('createdBy', 'username email'); });
+const getRecepieById = (id) => __awaiter(void 0, void 0, void 0, function* () { return yield recipe_schema_1.recipeModel.findById(id).populate('createdBy', 'username email'); });
 exports.default = {
     createRecipe,
     getAllRecepies,
